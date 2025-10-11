@@ -86,15 +86,16 @@ ${context}
              throw new Error("API không trả về kết quả. Nội dung có thể bị chặn.");
         }
 
-        // === KHẮC PHỤC LỖI PARSING JSON ===
+        // === KHẮC PHỤC LỖI PARSING JSON: Bắt đầu ở đây ===
         let aiResponse = data.candidates[0].content.parts[0].text;
         
-        // 1. Loại bỏ tất cả dấu ngoặc ngược (```json)
+        // 1. Loại bỏ tất cả dấu ngoặc ngược (```json) và khoảng trắng đầu/cuối
         aiResponse = aiResponse.replace(/```json|```/g, '').trim(); 
         
         // 2. Loại bỏ các ký tự xuống dòng thừa (để JSON nằm trên một dòng duy nhất, đảm bảo parsing)
         aiResponse = aiResponse.replace(/(\r\n|\n|\r)/gm, "");
         
+        // 3. Phân tích cú pháp JSON
         const quizObject = JSON.parse(aiResponse);
 
         return { statusCode: 200, body: JSON.stringify({ quiz: quizObject }) };
