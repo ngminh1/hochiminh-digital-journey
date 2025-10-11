@@ -1,0 +1,7 @@
+[functions]
+  # Đặt đường dẫn đến thư mục chứa các hàm của bạn
+  directory = "netlify/functions"
+  
+  # Chỉ định các file/thư mục cần được bao gồm trong gói triển khai của hàm (Bundling)
+  # Chúng ta cần bao gồm thư mục 'data' (nơi chứa knowledge.json)
+  included_files = ["data/"]
