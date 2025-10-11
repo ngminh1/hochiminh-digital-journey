@@ -5,10 +5,9 @@ const path = require('path');
 // 1. TỐI ƯU HÓA & KHẮC PHỤC LỖI: Đọc file knowledge.json CHỈ MỘT LẦN 
 // =================================================================
 
-// LƯU Ý: Đây là cách an toàn nhất để tìm file data từ vị trí của function.
-// __dirname là thư mục function. Ta đi ngược về thư mục gốc của dự án.
-// Ta giả định file nằm ở: /project-root/data/knowledge.json
-const KNOWLEDGE_PATH = path.join(__dirname, '..', '..', 'data', 'knowledge.json');
+// KHẮC PHỤC LỖI ENOENT: Sử dụng process.cwd() để tham chiếu đến thư mục gốc của dự án.
+// Đây là cách phổ biến nhất để truy cập file tĩnh trong các môi trường build.
+const KNOWLEDGE_PATH = path.join(process.cwd(), 'data', 'knowledge.json');
 
 let knowledgeBase = [];
 
@@ -18,14 +17,13 @@ try {
     console.log(`DEBUG: Đã tải ${knowledgeBase.length} mục kiến thức.`);
 } catch (error) {
     console.error("LỖI KHỞI TẠO:", error);
-    // Nếu lỗi là ENOENT, nó sẽ trả về lỗi nội bộ sau đó.
+    // Hàm sẽ trả về lỗi nội bộ nếu không tìm thấy file.
 }
 
-// Hàm tìm kiếm Knowledge đã được tối ưu hóa
+// Hàm tìm kiếm Knowledge đã được tối ưu hóa (Không thay đổi)
 function searchKnowledge(question) {
     const keywords = question.toLowerCase().split(' ');
     
-    // Sử dụng knowledgeBase đã được tải sẵn
     const relevantDocs = knowledgeBase.filter(doc => {
         const content = doc.noi_dung.toLowerCase();
         // Lọc từ khóa có độ dài > 2
@@ -44,7 +42,6 @@ exports.handler = async function (event) {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
 
-    // Kiểm tra nếu knowledgeBase bị lỗi khi khởi tạo (do không tìm thấy file)
     if (knowledgeBase.length === 0) {
          return {
             statusCode: 500,
