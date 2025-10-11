@@ -5,10 +5,13 @@ const path = require('path');
 // 1. TỐI ƯU HÓA & KHẮC PHỤC LỖI: Đọc file knowledge.json CHỈ MỘT LẦN 
 // =================================================================
 
-// KHẮC PHỤC LỖI ENOENT: Sử dụng LAMBDA_TASK_ROOT để xác định đường dẫn gốc.
-// LAMBDA_TASK_ROOT là thư mục chứa hàm đã triển khai (/var/task).
-// File knowledge.json nằm trong thư mục gốc của dự án, nên ta đi từ LAMBDA_TASK_ROOT đến đó.
-const KNOWLEDGE_PATH = path.join(process.env.LAMBDA_TASK_ROOT, 'data', 'knowledge.json');
+// KHẮC PHỤC LỖI ENOENT: 
+// Cách an toàn nhất là sử dụng path.join(process.cwd(), 'data', 'knowledge.json');
+// Tuy nhiên, Netlify có cách cấu hình đặc biệt. Log cho thấy file nằm trong /var/task/data.
+// Ta dùng __dirname để trỏ ngược về gốc gói triển khai.
+
+// Giả sử Netlify đặt file data ở gốc của gói triển khai, bên cạnh thư mục hàm.
+const KNOWLEDGE_PATH = path.join(__dirname, '..', 'data', 'knowledge.json');
 
 let knowledgeBase = [];
 
@@ -18,7 +21,7 @@ try {
     console.log(`DEBUG: Đã tải ${knowledgeBase.length} mục kiến thức.`);
 } catch (error) {
     console.error("LỖI KHỞI TẠO:", error);
-    // Nếu lỗi là ENOENT, nó sẽ trả về lỗi nội bộ sau đó.
+    // Hàm sẽ trả về lỗi nội bộ nếu không tìm thấy file.
 }
 
 // Hàm tìm kiếm Knowledge đã được tối ưu hóa (Không thay đổi)
