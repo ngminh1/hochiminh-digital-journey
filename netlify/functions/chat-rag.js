@@ -2,11 +2,12 @@ const fs = require('fs');
 const path = require('path');
 
 // =================================================================
-// 1. TỐI ƯU HÓA: Đọc file knowledge.json CHỈ MỘT LẦN khi hàm khởi tạo
+// 1. TỐI ƯU HÓA & KHẮC PHỤC LỖI: Đọc file knowledge.json CHỈ MỘT LẦN 
 // =================================================================
 
 // LƯU Ý: Đây là cách an toàn nhất để tìm file data từ vị trí của function.
-// __dirname là /netlify/functions/chat-rag.js. Ta đi ngược về thư mục gốc của dự án.
+// __dirname là thư mục function. Ta đi ngược về thư mục gốc của dự án.
+// Ta giả định file nằm ở: /project-root/data/knowledge.json
 const KNOWLEDGE_PATH = path.join(__dirname, '..', '..', 'data', 'knowledge.json');
 
 let knowledgeBase = [];
@@ -17,17 +18,17 @@ try {
     console.log(`DEBUG: Đã tải ${knowledgeBase.length} mục kiến thức.`);
 } catch (error) {
     console.error("LỖI KHỞI TẠO:", error);
-    // Hàm sẽ trả về lỗi nội bộ nếu không tìm thấy file.
+    // Nếu lỗi là ENOENT, nó sẽ trả về lỗi nội bộ sau đó.
 }
 
 // Hàm tìm kiếm Knowledge đã được tối ưu hóa
 function searchKnowledge(question) {
-    // 2. KHẮC PHỤC LỖI: Sử dụng knowledgeBase đã được tải sẵn
     const keywords = question.toLowerCase().split(' ');
     
-    // Lọc các từ khóa có độ dài > 2 để tăng hiệu quả tìm kiếm
+    // Sử dụng knowledgeBase đã được tải sẵn
     const relevantDocs = knowledgeBase.filter(doc => {
         const content = doc.noi_dung.toLowerCase();
+        // Lọc từ khóa có độ dài > 2
         return keywords.some(keyword => content.includes(keyword) && keyword.length > 2);
     });
 
@@ -47,7 +48,7 @@ exports.handler = async function (event) {
     if (knowledgeBase.length === 0) {
          return {
             statusCode: 500,
-            body: JSON.stringify({ error: "Lỗi nội bộ: Không thể tải dữ liệu kiến thức từ server. (Kiểm tra đường dẫn file data)" })
+            body: JSON.stringify({ error: "Lỗi nội bộ: Không thể tải dữ liệu kiến thức từ server. Vui lòng kiểm tra Log." })
         };
     }
 
@@ -60,7 +61,7 @@ exports.handler = async function (event) {
             throw new Error("API Key không được tìm thấy. Hãy kiểm tra biến môi trường trên Netlify.");
         }
 
-        // === PROMPT ĐÃ ĐƯỢC TỐI ƯU ===
+        // === PROMPT & GỌI API GEMINI (Giữ nguyên) ===
         const prompt = `Bạn là một chuyên gia AI về tư tưởng Hồ Chí Minh. Hãy trả lời câu hỏi của người dùng một cách trực tiếp, tự nhiên và súc tích.
         
 Kết hợp kiến thức của bạn với thông tin tham khảo dưới đây (nếu có) để trả lời. Đừng đề cập đến "ngữ cảnh" hay "tài liệu tham khảo" trong câu trả lời của bạn.
