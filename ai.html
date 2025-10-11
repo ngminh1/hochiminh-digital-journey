@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trải nghiệm AI - Hành trình số hóa</title>
+  <!-- Link đến file CSS chung của dự án -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Link đến file CSS riêng của trang AI -->
+  <link rel="stylesheet" href="ai.css">
+  <link rel="stylesheet" href="responsive-override.css">
+</head>
+<body class="light-theme">
+
+  <!-- Container để load header vào -->
+  <div id="menu-container"></div>
+
+  <!-- Nội dung chính của trang AI -->
+  <div class="light-container">
+    <h1>Trải nghiệm AI Tương tác</h1>
+    <p class="intro">
+      Khám phá di sản của Chủ tịch Hồ Chí Minh qua hai công cụ Trí tuệ Nhân tạo. Đặt câu hỏi cho Trợ lý AI được huấn luyện từ các văn kiện gốc, hoặc thử thách kiến thức của bạn với các câu hỏi trắc nghiệm được tạo tự động.
+    </p>
+
+    <!-- Grid chứa 2 module AI -->
+    <div class="ai-grid-container">
+      
+      <!-- Module 1: Chatbot Lịch sử -->
+      <div class="ai-module reveal">
+        <h2>Trợ lý AI Lịch sử</h2>
+        <p class="module-desc">Đặt câu hỏi và nhận câu trả lời chỉ dựa trên kho tài liệu đã được xác thực về tư tưởng Hồ Chí Minh.</p>
+        
+        <div id="chat-history" class="chat-history">
+          <div class="chat-message ai-message">Xin chào! Bạn muốn hỏi gì về tư tưởng Hồ Chí Minh hôm nay?</div>
+        </div>
+        
+        <form id="chat-form" class="chat-form">
+          <input type="text" id="user-input" placeholder="Ví dụ: Quan điểm của Bác về tự học là gì?" autocomplete="off" required>
+          <button type="submit" title="Gửi câu hỏi">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Module 2: AI Quiz -->
+      <div class="ai-module reveal">
+        <h2>Thử thách Tri thức</h2>
+        <p class="module-desc">Mỗi lần nhấn nút, AI sẽ tạo một câu hỏi trắc nghiệm ngẫu nhiên từ kho dữ liệu để thử thách sự hiểu biết của bạn.</p>
+        
+        <div id="quiz-container" class="quiz-container">
+          <p>Nhấn nút bên dưới để bắt đầu!</p>
+        </div>
+
+        <button id="generate-quiz-btn" class="btn-minimal">Tạo câu hỏi mới</button>
+      </div>
+
+    </div>
+  </div>
+  
+  <!-- Container để load footer vào -->
+  <div id="footer-container"></div>
+
+  <!-- Script để load header và footer -->
+  <script>
+    fetch('components/header.html').then(res => res.text()).then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+    });
+    fetch('components/footer.html').then(res => res.text()).then(html => {
+        document.getElementById('footer-container').innerHTML = html;
+    });
+  </script>
+
+  <!-- Script cho hiệu ứng reveal -->
+  <script src="assets/js/reveal.js"></script>
+  <!-- Script cho logic của trang AI -->
+  <script src="ai.js"></script>
+</body>
+</html>

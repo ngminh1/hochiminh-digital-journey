@@ -1,0 +1,189 @@
+/* ================================
+   AI.CSS - STYLE RIÊNG CHO TRANG AI
+   ================================ */
+
+/* Grid container cho 2 module AI */
+.ai-grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  margin-top: 3rem;
+}
+
+/* Style chung cho mỗi module AI */
+.ai-module {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 25px 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-module h2 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 8px;
+  border-left: 3px solid #f8d24a;
+  padding-left: 10px;
+}
+
+.ai-module .module-desc {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 20px;
+  min-height: 55px; /* Giữ chiều cao đồng đều */
+}
+
+/* ------------------ */
+/* --- CHATBOX AI --- */
+/* ------------------ */
+
+.chatbot-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-history {
+  flex-grow: 1;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 15px;
+  overflow-y: auto;
+  height: 300px; /* Chiều cao cố định */
+  margin-bottom: 15px;
+  background-color: #f9f9f9;
+}
+
+.chat-message {
+  padding: 8px 12px;
+  border-radius: 18px;
+  margin-bottom: 10px;
+  max-width: 85%;
+  line-height: 1.5;
+}
+
+.user-message {
+  background-color: #000;
+  color: #fff;
+  align-self: flex-end;
+  margin-left: auto; /* Đẩy tin nhắn người dùng sang phải */
+}
+
+.ai-message {
+  background-color: #e9ecef;
+  color: #111;
+  align-self: flex-start;
+}
+
+.ai-message.ai-thinking {
+  color: #777;
+  font-style: italic;
+}
+
+.chat-form {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-form input {
+  flex-grow: 1;
+  padding: 12px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.chat-form button {
+  background-color: #f8d24a;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.chat-form button:hover {
+  background-color: #ffdf5e;
+}
+
+/* ---------------- */
+/* --- QUIZ AI --- */
+/* ---------------- */
+
+.quiz-container {
+  flex-grow: 1;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  background-color: #f9f9f9;
+}
+
+.quiz-container h3 {
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.options-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-option {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 5px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+}
+
+.quiz-option:hover:not(:disabled) {
+  background-color: #f8d24a;
+  border-color: #f8d24a;
+}
+
+.quiz-option.correct {
+  background-color: #28a745;
+  color: white;
+  border-color: #28a745;
+}
+
+.quiz-option.incorrect {
+  background-color: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+
+.quiz-feedback {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+#generate-quiz-btn {
+  margin-top: auto; /* Đẩy nút xuống dưới cùng */
+}
+
+
+/* --- Responsive cho màn hình nhỏ --- */
+@media (max-width: 900px) {
+  .ai-grid-container {
+    grid-template-columns: 1fr; /* Chuyển thành 1 cột */
+  }
+}

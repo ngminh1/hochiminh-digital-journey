@@ -1,0 +1,106 @@
+/* --- Trang Giá trị vượt thời gian --- */
+
+body.light-theme {
+  background-color: #faf9f6;
+  color: #111;
+  overflow-x: hidden;
+}
+
+.values-container {
+  padding: 120px 10% 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.values-container h1 {
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #000;
+  border-left: 4px solid #f8d24a;
+  padding-left: 12px;
+  margin-bottom: 1rem;
+}
+
+.values-container .intro {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 4rem;
+}
+
+/* --- Section layout --- */
+.value-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  margin-bottom: 100px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.value-section.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.value-section.reverse {
+  flex-direction: row-reverse;
+}
+
+/* --- Text --- */
+.value-section .text {
+  flex: 1;
+}
+
+.value-section h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #000;
+}
+
+.value-section p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+/* --- Image --- */
+.value-section .image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.value-section img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transition: transform 0.4s ease;
+}
+
+.value-section img:hover {
+  transform: scale(1.03);
+}
+
+/* --- Button ---
+.outline-btn {
+  display: inline-block;
+  padding: 10px 24px;
+  border: 2px solid #000;
+  color: #000;
+  font-weight: 600;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.outline-btn:hover {
+  background-color: #000;
+  color: #fff;
+}
+ */

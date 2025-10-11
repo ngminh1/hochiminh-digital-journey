@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hành trình số hóa tư tưởng Hồ Chí Minh</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="responsive-override.css">
+</head>
+<body>
+
+  
+
+  <div id="menu-container"></div>
+  <canvas id="portraitCanvas"></canvas>
+  
+  <div class="main-content">
+    <h1 class="title">Hành trình số hóa tư tưởng Hồ Chí Minh</h1>
+    <p class="subtitle">Từ Nguồn Gốc, Hình Thành Đến Giá Trị Lan Tỏa Hôm Nay</p>
+    <div class="intro">
+      <p>
+        Chào mừng bạn đến với dự án số hóa Tư tưởng Hồ Chí Minh – nơi di sản lịch sử gặp gỡ công nghệ Trí tuệ Nhân tạo. Cùng khám phá hành trình tư tưởng vĩ đại của Người và tìm thấy giá trị định hướng cho kỷ nguyên số.
+      </p>
+      <a href="history.html" class="cta-btn">Khám phá hành trình</a>
+    </div>
+  </div>
+
+  
+  <div id="footer-container"></div>
+
+  <script>
+  fetch('components/header.html').then(res => res.text()).then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+    });
+    fetch('components/footer.html').then(res => res.text()).then(html => {
+        document.getElementById('footer-container').innerHTML = html;
+    });
+    </script>
+
+    <script src="assets/js/particles.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
