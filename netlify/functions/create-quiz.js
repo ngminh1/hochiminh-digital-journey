@@ -95,8 +95,21 @@ ${context}
         // 2. Loại bỏ các ký tự xuống dòng thừa (để JSON nằm trên một dòng duy nhất, đảm bảo parsing)
         aiResponse = aiResponse.replace(/(\r\n|\n|\r)/gm, "");
         
-        // 3. Phân tích cú pháp JSON
-        const quizObject = JSON.parse(aiResponse);
+        let quizObject;
+        try {
+            // 3. PHÂN TÍCH VÀ BẮT LỖI CỤC BỘ
+            quizObject = JSON.parse(aiResponse);
+        } catch (e) {
+             // Nếu lỗi xảy ra, log chi tiết chuỗi AI trả về
+             console.error("DEBUG: Failed to parse JSON. AI response (partial):", aiResponse.substring(0, 200) + '...');
+             throw new Error("Lỗi phân tích cú pháp JSON. Phản hồi của AI không đúng định dạng.");
+        }
+
+        // 4. Kiểm tra cấu trúc Quiz (Đảm bảo các trường cần thiết tồn tại)
+        if (!quizObject.question || !quizObject.options || !quizObject.answer) {
+             throw new Error("Cấu trúc Quiz không đầy đủ. AI không tạo đủ câu hỏi hoặc đáp án.");
+        }
+
 
         return { statusCode: 200, body: JSON.stringify({ quiz: quizObject }) };
 
