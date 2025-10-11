@@ -5,9 +5,10 @@ const path = require('path');
 // 1. TỐI ƯU HÓA & KHẮC PHỤC LỖI: Đọc file knowledge.json CHỈ MỘT LẦN 
 // =================================================================
 
-// KHẮC PHỤC LỖI ENOENT: Sử dụng process.cwd() để tham chiếu đến thư mục gốc của dự án.
-// Đây là cách phổ biến nhất để truy cập file tĩnh trong các môi trường build.
-const KNOWLEDGE_PATH = path.join(process.cwd(), 'data', 'knowledge.json');
+// KHẮC PHỤC LỖI ENOENT: Sử dụng LAMBDA_TASK_ROOT để xác định đường dẫn gốc.
+// LAMBDA_TASK_ROOT là thư mục chứa hàm đã triển khai (/var/task).
+// File knowledge.json nằm trong thư mục gốc của dự án, nên ta đi từ LAMBDA_TASK_ROOT đến đó.
+const KNOWLEDGE_PATH = path.join(process.env.LAMBDA_TASK_ROOT, 'data', 'knowledge.json');
 
 let knowledgeBase = [];
 
@@ -17,7 +18,7 @@ try {
     console.log(`DEBUG: Đã tải ${knowledgeBase.length} mục kiến thức.`);
 } catch (error) {
     console.error("LỖI KHỞI TẠO:", error);
-    // Hàm sẽ trả về lỗi nội bộ nếu không tìm thấy file.
+    // Nếu lỗi là ENOENT, nó sẽ trả về lỗi nội bộ sau đó.
 }
 
 // Hàm tìm kiếm Knowledge đã được tối ưu hóa (Không thay đổi)
@@ -45,7 +46,7 @@ exports.handler = async function (event) {
     if (knowledgeBase.length === 0) {
          return {
             statusCode: 500,
-            body: JSON.stringify({ error: "Lỗi nội bộ: Không thể tải dữ liệu kiến thức từ server. Vui lòng kiểm tra Log." })
+            body: JSON.stringify({ error: "Lỗi nội bộ: Không thể tải dữ liệu kiến thức. Vui lòng kiểm tra Log." })
         };
     }
 
