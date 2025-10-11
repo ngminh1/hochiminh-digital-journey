@@ -15,7 +15,7 @@ try {
     knowledgeBase = JSON.parse(knowledgeData);
     console.log(`DEBUG: Đã tải ${knowledgeBase.length} mục kiến thức cho Quiz.`);
 } catch (error) {
-    console.error("LỖI KHỞI TẠO QUIZ: Không thể đọc hoặc phân tích cú pháp knowledge.json. Kiểm tra file đã được di chuyển.", error);
+    console.error("LỖI KHỞI TẠO QUIZ:", error);
     // Để trống knowledgeBase, hàm sẽ xử lý lỗi này sau.
 }
 
@@ -86,9 +86,14 @@ ${context}
              throw new Error("API không trả về kết quả. Nội dung có thể bị chặn.");
         }
 
-        // Lấy phản hồi, loại bỏ dấu ngoặc ngược (backticks) và phân tích cú pháp JSON
+        // === KHẮC PHỤC LỖI PARSING JSON ===
         let aiResponse = data.candidates[0].content.parts[0].text;
+        
+        // 1. Loại bỏ tất cả dấu ngoặc ngược (```json)
         aiResponse = aiResponse.replace(/```json|```/g, '').trim(); 
+        
+        // 2. Loại bỏ các ký tự xuống dòng thừa (để JSON nằm trên một dòng duy nhất, đảm bảo parsing)
+        aiResponse = aiResponse.replace(/(\r\n|\n|\r)/gm, "");
         
         const quizObject = JSON.parse(aiResponse);
 
