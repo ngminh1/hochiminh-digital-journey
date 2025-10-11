@@ -11,7 +11,7 @@ const path = require('path');
 // Ta dùng __dirname để trỏ ngược về gốc gói triển khai.
 
 // Giả sử Netlify đặt file data ở gốc của gói triển khai, bên cạnh thư mục hàm.
-const KNOWLEDGE_PATH = path.join(__dirname, '..', 'data', 'knowledge.json');
+const KNOWLEDGE_PATH = path.join(__dirname, '..', 'data', 'knowledge.json'); 
 
 let knowledgeBase = [];
 
