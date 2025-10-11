@@ -1,3 +1,3 @@
 [functions]
   directory = "netlify/functions"
-  # Loại bỏ dòng included_files = ["data/"]
+  included_files = ["data/", "netlify/functions/knowledge.json"] # Giữ cả data và file json đã di chuyển nếu cần
