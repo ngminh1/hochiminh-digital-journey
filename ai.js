@@ -66,7 +66,7 @@ generateQuizBtn.addEventListener('click', async () => {
   generateQuizBtn.disabled = true; // Vô hiệu hóa nút trong khi chờ
 
   try {
-    const response = await fetch('/.netlify/functions/create-quiz');
+    const response = await fetch('/netlify/functions/create-quiz');
      if (!response.ok) {
         throw new Error(`Lỗi mạng: ${response.status}`);
     }
